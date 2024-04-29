@@ -16,44 +16,41 @@ const openai = new OpenAI({
 });
 
 // Define route for handling POST requests to /find-complexity
-app.post('/find-complexity', async (req, res) => {
-  const prompt = "give me five fruits name?";
-    try {
-        // Handling for the "find-complexity" endpoint goes here
-        const response = await openai.chat.completions.create({
-          model: "gpt-3.5-turbo",
-          messages: [
-            {
-              "role": "user",
-              "content": req.body.text // Assuming the text to be analyzed is in the request body
-            }
-          ],
-          temperature: 1,
-          prompt: prompt,
-          max_tokens: 256,
-          top_p: 1,
-          frequency_penalty: 0,
-          presence_penalty: 0,
-        });
+app.get('/find-complexity', async (req, res) => {
+  try {
+    // Handling for the "find-complexity" endpoint goes here
+    const response = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages: [
+        {
+          "role": "user",
+          "content": "fruits name" // Ensure that userInput is not null
+        }
+      ],
+      temperature: 1,
+      max_tokens: 256,
+      top_p: 1,
+      frequency_penalty: 0,
+      presence_penalty: 0,
+    });
 
-        // Send the response from OpenAI chat completions back to the client
-        console.log(response.data);
-        return res.json(response.data);
-    } catch (error) {
-        console.error(error); // Log the error for debugging
-        return res.status(500).json({
-            error: "Something went wrong",
-        });
-    }
+    // Send the response from OpenAI chat completions back to the client
+    return res.json({ response: response.choices[0].message.content });
+  } catch (error) {
+    console.error(error); // Log the error for debugging
+    return res.status(500).json({
+      error: "Something went wrong",
+    });
+  }
 });
 
 // Define a route for handling errors
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Something went wrong!');
+  console.error(err.stack);
+  res.status(500).send('Something went wrong!');
 });
 
 // Start the server
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+  console.log(`Server is running on port ${port}`);
 });
