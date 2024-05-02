@@ -8,9 +8,13 @@ require("dotenv").config();
 const app = express();
 app.use(express.json());
 
+// Initialize OpenAI with API key
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
+
+// TMDB API key
+const tmdbApiKey =process.env.TMDB_API_key;
 
 app.get('/find-complexity', async (req, res) => {
   try {
@@ -31,10 +35,8 @@ app.get('/find-complexity', async (req, res) => {
 
     const movieName = response.choices[0].message.content;
     console.log("Movie Name:", movieName);
-
-    // Fetch movie details from TMDB based on the movie name
-    const apiKey = process.env.TMDB_API_KEY;
-    const tmdbUrl = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(movieName)}`;
+    
+    const tmdbUrl = `https://api.themoviedb.org/3/search/movie?api_key=${tmdbApiKey}&query=${encodeURIComponent(movieName)}`;
 
     const tmdbResponse = await axios.get(tmdbUrl);
     const movieData = tmdbResponse.data.results[0]; // Assuming the first result is the desired movie
@@ -43,7 +45,9 @@ app.get('/find-complexity', async (req, res) => {
       const posterPath = movieData.poster_path;
       if (posterPath) {
         const posterUrl = `https://image.tmdb.org/t/p/original/${posterPath}`;
-        return res.json({ posterUrl });
+        const encodedPosterUrl = encodeURIComponent(posterUrl);
+        
+        return res.json({ posterUrl: encodedPosterUrl });
       } else {
         return res.status(404).json({ error: 'Poster not found' });
       }
@@ -64,3 +68,8 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+
+let person1 = { name : "steve"};
+const map  = new map();
+map.set(person, "this is steve")
