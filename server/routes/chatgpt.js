@@ -1,39 +1,40 @@
 // chatgpt.js
 const express = require('express');
 const { OpenAI } = require("openai");
-const chatgptrouter = express.Router();
+const router = express.Router();
 require("dotenv").config();
+
+console.log("1");
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-chatgptrouter.get('/find-movie', async (req, res) => {
-  try {
-    // Your chatgpt logic here
-    const response = await openai.chat.completions.create({
-      model: "text-davinci-003",
-      messages: [
-        {
-          "role": "user",
-          "content": "korean drama" // assuming the question is sent in the request body
-        }
-      ],
-      temperature: 1,
-      max_tokens: 256,
-      top_p: 1,
-      frequency_penalty: 0,
-      presence_penalty: 0,
-    });
+console.log("2");
 
-    const movieName = response.data.choices[0].message.content;
-    console.log("Movie Name:", movieName);
-    res.json({'moveName': movieName})
-    res.redirect(`/tmdb/find-movie-poster/${encodeURIComponent(movieName)}`);
-  } catch (error) {
-    console.error('Error fetching movie details:', error);
-    return res.status(500).json({ error: 'Internal server error' });
-  }
+router.get('/', async (req, res) => {
+    console.log("4");
+    try {
+        const response = await openai.chat.completions.create({
+            model: "gpt-3.5-turbo", // Example model ID for the Davinci model
+            messages : [{"role": "user", "content": "name of korean drama"}],
+            max_tokens: 256,
+            temperature: 0.7,
+            top_p: 1,
+            presence_penalty: 0,
+        });
+
+        const movieName = response.choices[0].message.content;
+        console.log("Movie Name:", movieName);
+        console.log("5");
+
+        res.json({ movieName });
+    } catch (error) {
+        console.error('Error fetching movie details:', error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
 });
 
-module.exports =chatgptrouter;
+console.log("3");
+
+module.exports = router;

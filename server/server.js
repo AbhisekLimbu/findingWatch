@@ -5,18 +5,17 @@ const tmdbRouter = require('./routes/tmdb');
 require("dotenv").config();
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3002;
 
 app.use(express.json());
 
-app.use('/chatgpt', chatgptRouter); // Mount chatgptRouter
-app.use('/tmdb', tmdbRouter); // Mount tmdbRouter
+app.use('/chatgpt', chatgptRouter);
+app.use('/tmdb', tmdbRouter);
 
-app.get('/', (req, res)=>{
-  res.send("hello world");
+app.get('/', (req, res) => {
+  res.send("Hello World");
 });
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
-
