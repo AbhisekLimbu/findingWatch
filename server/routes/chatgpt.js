@@ -1,8 +1,11 @@
-// chatgpt.js
 const express = require('express');
 const { OpenAI } = require("openai");
+const cors = require('cors');
 const router = express.Router();
+
 require("dotenv").config();
+
+router.use(cors());
 
 console.log("1");
 
@@ -12,8 +15,21 @@ const openai = new OpenAI({
 
 console.log("2");
 
+router.post('/', async(req, res) =>{
+    try{
+        const {actor, actress, genre, director, year} = req.body;
+
+        console.log("Recived data:", actor, actress, genre, director, year );
+        res.json({ sucess: true });
+    }catch(eror){
+        console.error("error processing form data:", error);
+        res.status(500).json({error: 'internal server error'})
+    }
+});
+
+
 router.get('/', async (req, res) => {
-    console.log("4");
+
     try {
         const response = await openai.chat.completions.create({
             model: "gpt-3.5-turbo", // Example model ID for the Davinci model

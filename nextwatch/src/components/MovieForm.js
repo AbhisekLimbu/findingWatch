@@ -1,38 +1,113 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
-const MovieForm = ({ onSubmit }) => {
-  const [query, setQuery] = useState('');
+const ContactForm = () => {
+  // Initialize state for form fields
+  const [formData, setFormData] = useState({
+    actor: '',
+    actress: '',
+    genre: '',
+    director: '',
+    year: ''
+  });
 
-  const handleChange = (event) => {
-    setQuery(event.target.value);
+  // Handle form field changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (query.trim() !== '') {
-      onSubmit(query);
-      setQuery(''); // Clear input after submission
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      // Send form data to server
+      const response = await axios.post('http://localhost:3002/chatgpt', formData, {
+        headers: {
+          'Content-Type': 'application/json' // Specify content type
+        }
+      });
+      
+      // Log server response
+      console.log('Server response:', response.data);
+
+      // Optionally, reset the form after successful submission
+      setFormData({
+        actor: '',
+        actress: '',
+        genre: '',
+        director: '',
+        year: ''
+      });
+    } catch (error) {
+      console.error('Error submitting form:', error);
     }
   };
 
   return (
-    <div className="movie-form-container">
-      <h2>Find Movie Information</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="movie-query">Enter Movie Title:</label>
-          <input
-            id="movie-query"
-            type="text"
-            value={query}
-            onChange={handleChange}
-            placeholder="E.g., The Shawshank Redemption"
-          />
-        </div>
-        <button type="submit">Search</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="actor">Actor:</label>
+        <input 
+          type="text" 
+          id="actor" 
+          name="actor" 
+          value={formData.actor} 
+          onChange={handleChange} 
+          required 
+        />
+      </div>
+      <div>
+        <label htmlFor="actress">Actress:</label>
+        <input 
+          type="text" 
+          id="actress" 
+          name="actress" 
+          value={formData.actress} 
+          onChange={handleChange} 
+          required 
+        />
+      </div>
+      <div>
+        <label htmlFor="genre">Genre:</label>
+        <input 
+          type="text" 
+          id="genre" 
+          name="genre" 
+          value={formData.genre} 
+          onChange={handleChange} 
+          required 
+        />
+      </div>
+      <div>
+        <label htmlFor="director">Director:</label>
+        <input 
+          type="text" 
+          id="director" 
+          name="director" 
+          value={formData.director} 
+          onChange={handleChange} 
+          required 
+        />
+      </div>
+      <div>
+        <label htmlFor="year">Year:</label>
+        <input 
+          type="number" 
+          id="year" 
+          name="year" 
+          value={formData.year} 
+          onChange={handleChange} 
+          required 
+        />
+      </div>
+      <button type="submit">Submit</button>
+    </form>
   );
 };
 
-export default MovieForm;
+export default ContactForm;
