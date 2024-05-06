@@ -49,64 +49,78 @@ const ContactForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="actor">Actor:</label>
-        <input 
-          type="text" 
-          id="actor" 
-          name="actor" 
-          value={formData.actor} 
-          onChange={handleChange} 
-          required 
-        />
+    <div className="container mt-5">
+      <div className="card shadow">
+        <div className="card-body">
+          <h1 className="card-title text-center mb-4">Your Next Watch</h1>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label htmlFor="actor" className="form-label">Actor:</label>
+              <input 
+                type="text" 
+                id="actor" 
+                name="actor" 
+                value={formData.actor} 
+                onChange={handleChange} 
+                className="form-control" 
+                required 
+              />  
+            </div>
+            <div className="mb-3">
+              <label htmlFor="actress" className="form-label">Actress:</label>
+              <input 
+                type="text" 
+                id="actress" 
+                name="actress" 
+                value={formData.actress} 
+                onChange={handleChange} 
+                className="form-control" 
+                required 
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="genre" className="form-label">Genre:</label>
+              <input 
+                type="text" 
+                id="genre" 
+                name="genre" 
+                value={formData.genre} 
+                onChange={handleChange} 
+                className="form-control" 
+                required 
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="director" className="form-label">Director:</label>
+              <input 
+                type="text" 
+                id="director" 
+                name="director" 
+                value={formData.director} 
+                onChange={handleChange} 
+                className="form-control" 
+                required 
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="year" className="form-label">Year:</label>
+              <input 
+                type="number" 
+                id="year" 
+                name="year" 
+                value={formData.year} 
+                onChange={handleChange} 
+                className="form-control" 
+                required 
+              />
+            </div>
+            <div className="d-grid gap-2">
+              <button type="submit" className="btn btn-primary">Submit</button>
+            </div>
+          </form>
+        </div>
       </div>
-      <div>
-        <label htmlFor="actress">Actress:</label>
-        <input 
-          type="text" 
-          id="actress" 
-          name="actress" 
-          value={formData.actress} 
-          onChange={handleChange} 
-          required 
-        />
-      </div>
-      <div>
-        <label htmlFor="genre">Genre:</label>
-        <input 
-          type="text" 
-          id="genre" 
-          name="genre" 
-          value={formData.genre} 
-          onChange={handleChange} 
-          required 
-        />
-      </div>
-      <div>
-        <label htmlFor="director">Director:</label>
-        <input 
-          type="text" 
-          id="director" 
-          name="director" 
-          value={formData.director} 
-          onChange={handleChange} 
-          required 
-        />
-      </div>
-      <div>
-        <label htmlFor="year">Year:</label>
-        <input 
-          type="number" 
-          id="year" 
-          name="year" 
-          value={formData.year} 
-          onChange={handleChange} 
-          required 
-        />
-      </div>
-      <button type="submit">Submit</button>
-    </form>
+    </div>
   );
 };
 
