@@ -63,7 +63,7 @@ const ContactForm = () => {
                 value={formData.actor} 
                 onChange={handleChange} 
                 className="form-control" 
-                required 
+               
               />  
             </div>
             <div className="mb-3">
@@ -75,7 +75,7 @@ const ContactForm = () => {
                 value={formData.actress} 
                 onChange={handleChange} 
                 className="form-control" 
-                required 
+               
               />
             </div>
             <div className="mb-3">
@@ -87,7 +87,7 @@ const ContactForm = () => {
                 value={formData.genre} 
                 onChange={handleChange} 
                 className="form-control" 
-                required 
+                
               />
             </div>
             <div className="mb-3">
@@ -99,7 +99,7 @@ const ContactForm = () => {
                 value={formData.director} 
                 onChange={handleChange} 
                 className="form-control" 
-                required 
+               
               />
             </div>
             <div className="mb-3">
@@ -111,7 +111,7 @@ const ContactForm = () => {
                 value={formData.year} 
                 onChange={handleChange} 
                 className="form-control" 
-                required 
+                
               />
             </div>
             <div className="d-grid gap-2">
