@@ -2,16 +2,14 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const ContactForm = () => {
-  // Initialize state for form fields
   const [formData, setFormData] = useState({
     actor: '',
-    actress: '',
+    actress: '', 
     genre: '',
     director: '',
     year: ''
   });
 
-  // Handle form field changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevState => ({
@@ -20,22 +18,18 @@ const ContactForm = () => {
     }));
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Send form data to server
       const response = await axios.post('http://localhost:3002/chatgpt', formData, {
         headers: {
-          'Content-Type': 'application/json' // Specify content type
+          'Content-Type': 'application/json'
         }
       });
-      
-      // Log server response
+
       console.log('Server response:', response.data);
 
-      // Optionally, reset the form after successful submission
       setFormData({
         actor: '',
         actress: '',
@@ -49,11 +43,11 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="card shadow">
-        <div className="card-body">
-          <h1 className="card-title text-center mb-4">Your Next Watch</h1>
-          <form onSubmit={handleSubmit}>
+    <div className="outer-container" style={{ marginTop: '100px' }}>
+      <div className="container">
+        <div className="card shadow" style={{ padding: '30px' }}>
+          <h1 className="c`ard-title text-center mb-4">Your Next Watch</h1>
+          <form onSubmit={handleSubmit} style={{ maxWidth: '500px', margin: '0 auto' }}>
             <div className="mb-3">
               <label htmlFor="actor" className="form-label">Actor:</label>
               <input 
@@ -63,7 +57,6 @@ const ContactForm = () => {
                 value={formData.actor} 
                 onChange={handleChange} 
                 className="form-control" 
-               
               />  
             </div>
             <div className="mb-3">
@@ -75,7 +68,6 @@ const ContactForm = () => {
                 value={formData.actress} 
                 onChange={handleChange} 
                 className="form-control" 
-               
               />
             </div>
             <div className="mb-3">
@@ -87,7 +79,6 @@ const ContactForm = () => {
                 value={formData.genre} 
                 onChange={handleChange} 
                 className="form-control" 
-                
               />
             </div>
             <div className="mb-3">
@@ -99,7 +90,6 @@ const ContactForm = () => {
                 value={formData.director} 
                 onChange={handleChange} 
                 className="form-control" 
-               
               />
             </div>
             <div className="mb-3">
@@ -111,16 +101,18 @@ const ContactForm = () => {
                 value={formData.year} 
                 onChange={handleChange} 
                 className="form-control" 
-                
               />
             </div>
-            <div className="d-grid gap-2">
+            <div className="d-grid gap-5">
               <button type="submit" className="btn btn-primary">Submit</button>
             </div>
           </form>
         </div>
       </div>
+      <div>
     </div>
+    </div>
+  
   );
 };
 
