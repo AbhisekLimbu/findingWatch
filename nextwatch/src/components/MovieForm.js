@@ -11,9 +11,9 @@ const ContactForm = () => {
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+     const { name, value } = e.target;
     setFormData(prevState => ({
-      ...prevState,
+      xprevState,
       [name]: value
     }));
   };
@@ -93,7 +93,7 @@ const ContactForm = () => {
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="year" className="form-label">Year:</label>
+              <label htmlFor="year" className="form-label">Year:</label>f v
               <input 
                 type="number" 
                 id="year" 

@@ -5,7 +5,7 @@ const router = express.Router();
 require("dotenv").config();
 
 const tmdbApiKey = process.env.TMDB_API_KEY;
-
+  
 router.get('/find-movie-poster/:movieName', async (req, res) => {
   try {
     const movieName = req.params.movieName;
