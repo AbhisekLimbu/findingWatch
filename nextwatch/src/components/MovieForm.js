@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const ContactForm = () => {
+const MovieForm = () => {
   const [formData, setFormData] = useState({
-    actor: '',
-    actress: '', 
-    genre: '',
-    director: '',
-    year: ''
+    selectedOption: '',
+    inputValue: '' // New state for the input value
   });
 
   const handleChange = (e) => {
-     const { name, value } = e.target;
-    setFormData(prevState => ({
-      xprevState,
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
       [name]: value
-    }));
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -30,90 +27,52 @@ const ContactForm = () => {
 
       console.log('Server response:', response.data);
 
-      setFormData({
-        actor: '',
-        actress: '',
-        genre: '',
-        director: '',
-        year: ''
-      });
+      setFormData({ selectedOption: '', inputValue: '' });
     } catch (error) {
       console.error('Error submitting form:', error);
     }
   };
 
+  // Function to render input based on selected option
+  const renderInput = () => {
+    switch (formData.selectedOption) {
+      case 'Actor':
+      case 'Actress':
+      case 'Director':
+      case 'Genre':
+        return (
+          <div>
+            <input
+              type="text"
+              name="inputValue"
+              value={formData.inputValue}
+              onChange={handleChange}
+              placeholder={`Enter ${formData.selectedOption}`}
+            />
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="outer-container" style={{ marginTop: '100px' }}>
-      <div className="container">
-        <div className="card shadow" style={{ padding: '30px' }}>
-          <h1 className="c`ard-title text-center mb-4">Your Next Watch</h1>
-          <form onSubmit={handleSubmit} style={{ maxWidth: '500px', margin: '0 auto' }}>
-            <div className="mb-3">
-              <label htmlFor="actor" className="form-label">Actor:</label>
-              <input 
-                type="text" 
-                id="actor" 
-                name="actor" 
-                value={formData.actor} 
-                onChange={handleChange} 
-                className="form-control" 
-              />  
-            </div>
-            <div className="mb-3">
-              <label htmlFor="actress" className="form-label">Actress:</label>
-              <input 
-                type="text" 
-                id="actress" 
-                name="actress" 
-                value={formData.actress} 
-                onChange={handleChange} 
-                className="form-control" 
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="genre" className="form-label">Genre:</label>
-              <input 
-                type="text" 
-                id="genre" 
-                name="genre" 
-                value={formData.genre} 
-                onChange={handleChange} 
-                className="form-control" 
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="director" className="form-label">Director:</label>
-              <input 
-                type="text" 
-                id="director" 
-                name="director" 
-                value={formData.director} 
-                onChange={handleChange} 
-                className="form-control" 
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="year" className="form-label">Year:</label>f v
-              <input 
-                type="number" 
-                id="year" 
-                name="year" 
-                value={formData.year} 
-                onChange={handleChange} 
-                className="form-control" 
-              />
-            </div>
-            <div className="d-grid gap-5">
-              <button type="submit" className="btn btn-primary">Submit</button>
-            </div>
-          </form>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <select name="selectedOption" value={formData.selectedOption} onChange={handleChange}>
+            <option value="">Select an option</option>
+            <option value="Actor">Actor</option>
+            <option value="Actress">Actress</option>
+            <option value="Director">Director</option>
+            <option value="Genre">Genre</option>
+          </select>
         </div>
-      </div>
-      <div>
+        {renderInput()} {/* Render input based on selected option */}
+        <button type="submit">Submit</button>
+      </form>
     </div>
-    </div>
-  
   );
 };
 
-export default ContactForm;
+export default MovieForm;
